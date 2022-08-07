@@ -9,12 +9,14 @@ const imagesHost = "https://superheros-collection.herokuapp.com";
 function HomePage() {
     const [allHeros, setAllHeros] = useState([]);
     const [onDelete, setOnDelete] = useState(true);
+    const [length, setLength] = useState(null);
 
     const toLoadAllHeros = async () => {
         try {
-            const data = await api.fetchAllHeros();
-            console.log(data)
-            setAllHeros(data.data);
+            const objectData = await api.fetchAllHeros();
+            
+            setAllHeros(objectData.data.result);
+            setLength(objectData.data.dataLength);
         } catch (error) {
             console.log(error.message);
         }
@@ -32,6 +34,9 @@ function HomePage() {
 
     const handlDelete = async (id) => {
         api.superId = id;
+        if (length === (api.page * 5 - 4)) {
+            api.decrementPage();
+        }
         try {
             await api.fetchToDeleteHero();
         } catch (error) {
@@ -41,10 +46,12 @@ function HomePage() {
     }
 
     useEffect(() => {
+        
         toLoadAllHeros();
     }, [onDelete]);
 
-    return (
+    return <>
+        {length === null ? <h2>Loading...</h2> : 
         <div className={s.homePage}>
             <ul className={s.gallery}>
                 {allHeros.map(({ _id: id, nickname, images }) => {
@@ -61,12 +68,12 @@ function HomePage() {
                     </li>
                 )})}
             </ul>
-            <div className={s.paginetion}>
-                <button type="button" onClick={() => clickBefor()} className={s.btn_befor}>Befor</button>
-                <button type="button" onClick={() => clickNext()} className={s.btn_next}>Next</button>
-            </div>
-        </div>
-    )
+            {length > 5 && <div className={s.paginetion}>
+                <button type="button" onClick={() => clickBefor()} className={s.btn_befor} disabled={api.page < 2 ? true : false}>Befor</button>
+                <button type="button" onClick={() => clickNext()} className={s.btn_next} disabled={api.page === Math.ceil(length / 5) ? true : false}>Next</button>
+            </div>}
+        </div>}
+    </>
 }
 
 export default HomePage;
