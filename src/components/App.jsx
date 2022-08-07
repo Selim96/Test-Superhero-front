@@ -10,7 +10,7 @@ const NotFoundView = lazy(() => import('./NotFoundView/NotFoundView'));
 function App() {
     return <div>
         <Appbar />
-        
+        <Container>
         <Suspense fallback={<h2>Loading...</h2>}>   
             <Routes>
                 <Route path="/" element={<HomePage />} exact/>
@@ -23,6 +23,7 @@ function App() {
                 
             </Routes>
         </Suspense>
+        </Container>
     </div>
 }
 

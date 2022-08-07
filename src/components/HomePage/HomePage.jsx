@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link, useMatch, useLocation } from "react-router-dom";
-import api from "../services/api";
+import { Link } from "react-router-dom";
+import api from "../../services/api";
 import s from './HomePage.module.css';
+import DeleteBtn from "../DeleteBtn";
 
 function HomePage() {
     const [allHeros, setAllHeros] = useState([]);
-    const match = useMatch("/id");
-    const location = useLocation();
+    
 
     const toLoadAllHeros = async () => {
         try {
@@ -17,9 +17,17 @@ function HomePage() {
         }
     };
 
+    const handlDelete = async (id) => {
+        api.superId = id;
+        try {
+            await api.fetchToDeleteHero();
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     useEffect(() => {
-        console.log(match)
-        console.log(location)
+        
         toLoadAllHeros();
     }, []);
 
@@ -27,10 +35,10 @@ function HomePage() {
         <>
         <ul className={s.gallery}>
             {allHeros.map(({ _id: id, nickname, images }) => (
-                <li key={id} className={s.gallery_item}><Link to={"/"}><div className={s.gallery_card}>
-                    <img src={images[0]} />
-                    <p>{nickname}</p>
-                    
+                <li key={id} className={s.galleryItem}><Link to="id"><div className={s.galleryCard}>
+                    <img src={`${images[0]}`} className={s.galleryImage} />
+                    <p className={s.galleryNiclname}>{nickname}</p>
+                    <button type="button" onClick={()=>handlDelete(id)} className={s.dltButton}>Delete</button>
                 </div></Link></li>
             ))}
         </ul>
