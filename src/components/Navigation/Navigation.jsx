@@ -5,8 +5,8 @@ export default function Navigation() {
     return (
         <>
             <nav>                
-                <NavLink exact="true" to='/' className={s.link} activeClassName={s.activeLink}>Home</NavLink>
-                <NavLink to='/newsuperhero' className={s.link} activeClassName={s.activeLink}>Add</NavLink>
+                <NavLink exact="true" to='/superheros' className={s.link} activeClassName={s.activeLink}>Home</NavLink>
+                <NavLink to='/superheros/newsuperhero' className={s.link} activeClassName={s.activeLink}>Add</NavLink>
             </nav>
         </>
     )

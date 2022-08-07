@@ -8,16 +8,17 @@ const NewSuperHero = lazy(() => import('./NewSuperHero'));
 const NotFoundView = lazy(() => import('./NotFoundView/NotFoundView'));
 
 function App() {
+
     return <div>
         <Appbar />
         <Container>
         <Suspense fallback={<h2>Loading...</h2>}>   
             <Routes>
-                <Route path="/" element={<HomePage />} exact/>
+                <Route path="/superheros" element={<HomePage/>} exact/>
                     
-                <Route path="/:superId" element={<SuperHeroInfo />}/>
+                <Route path="/superheros/:superId" element={<SuperHeroInfo />} exact/>
                     
-                <Route path="/newsuperhero" element={<NewSuperHero/>} exact />
+                <Route path="/superheros/newsuperhero" element={<NewSuperHero/>} exact />
                     
                 <Route element={<NotFoundView />} />
                 

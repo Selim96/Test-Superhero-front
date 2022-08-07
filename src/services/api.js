@@ -8,7 +8,7 @@ class Api {
     
     async fetchAllHeros() {
         const result = await axios.get(`?page=${this.page}`);
-        return result.data;
+        return result;
     }
 
     async fetchToDeleteHero() {
@@ -29,6 +29,10 @@ class Api {
 
     incrementPage() {
         this.page += 1;
+    }
+
+    decrementPage() {
+        this.page -= 1;
     }
 
     resetPage() {
