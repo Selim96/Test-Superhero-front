@@ -16,7 +16,8 @@ class Api {
     }
 
     async fetchById() {
-
+        const result = await axios.get(`/${this.superId}`);
+        return result;
     }
 
     async fetchToCreate() {
