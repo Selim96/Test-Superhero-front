@@ -14,11 +14,11 @@ function App() {
         <Container>
         <Suspense fallback={<h2>Loading...</h2>}>   
             <Routes>
-                <Route path="/superheros" element={<HomePage/>} exact/>
+                <Route path="/" element={<HomePage/>} exact/>
                     
-                <Route path="/superheros/:superId" element={<SuperHeroInfo />} exact/>
+                <Route path="/:superId" element={<SuperHeroInfo />} exact/>
                     
-                <Route path="/superheros/newsuperhero" element={<NewSuperHero/>} exact />
+                <Route path="/newsuperhero" element={<NewSuperHero/>} exact />
                     
                 <Route element={<NotFoundView />} />
                 

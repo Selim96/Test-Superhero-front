@@ -20,12 +20,26 @@ class Api {
         return result;
     }
 
-    async fetchToCreate() {
-
+    async fetchToCreate(data) {
+        const result = await axios({
+            method: 'POST',
+            headers: { 'content-type': 'multipart/form-data' },
+            data: data,
+            url: "/"
+        });
+    return result;
     }
 
-    async fetchToEditImages() {
-
+    async fetchToEditImages(imageToDelete = null, arrayOfImages) {
+        const result = await axios({
+            method: 'patch',
+            headers: { 'content-type': 'multipart/form-data' },
+            url: `/${this.superId}`,
+            data: {
+                imageToDelete,
+                cuurentImages: arrayOfImages
+            }
+        });
     }
 
     incrementPage() {
