@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import s from './SuperHeroInfo.module.css';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 
 const imagesHost = "https://superheros-collection.herokuapp.com";
 
@@ -12,16 +13,16 @@ function SuperHeroInfo() {
 
     const { superId } = useParams();
 
-    const fetchSuperHero = async () => {
-        api.superId = superId;
-        const result = await api.fetchById();
-        setSuperHero(result.data);
-    };
+    const formData = new FormData();
+        formData.append("images", newImages);
 
-    const deleteImage = async (imageToDelete) => {
+    const deleteImage = async (image) => {
+        formData.append("imageToDelete", image);
         try {
-            const result = await api.fetchToEditImages(imageToDelete, superHero.images);
-            setSuperHero({ ...superHero, images: result });
+            const {data} = await api.fetchToEditImages(formData);
+            if (data) {
+                setSuperHero({ ...superHero, images: data.images });
+            }
         } catch (error) {
             console.log(error.message);
         }
@@ -31,28 +32,31 @@ function SuperHeroInfo() {
         setNewImages(e.currentTarget.files[0]);
     };
 
-    const addNewImage = async () => {
-        try {
-            const result = await api.fetchToEditImages(null, superHero.images);
-
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-
     const handlSubmit = e => {
         e.preventDefault();
-        addNewImage();
 
+        api.fetchToEditImages(formData).then(({ data }) => {
+            console.log(data);
+            setSuperHero({ ...superHero, images: data.images });
+        }).catch(error => {
+            console.log(error.message);
+        });
+
+        setNewImages([]);
         toast("Superhero was added successfuly!")
     }
 
     useEffect(() => {
-        fetchSuperHero();
+        api.superId = superId;
+        api.fetchById().then((result) => {
+            setSuperHero(result.data);
+        }).catch(error => {
+            console.log(error.message);
+        });
     }, [superId]);
 
-    console.log(superHero)
-    const {nickname, real_name, images, origin_description, superpowers, catch_phrase } = superHero;
+    const { nickname, real_name, images, origin_description, superpowers, catch_phrase } = superHero;
+    
     return <>
         {Object.keys(superHero).length === 0 ? <h2>Loading...</h2> :
         <div className={s.superCard}>
@@ -69,18 +73,18 @@ function SuperHeroInfo() {
                 <h3 className={s.galleryTitile}>Gallery</h3>
                 <ul className={s.galleryList}>
                     {images.map(image => (
-                        <li className={s.galleryItem}>
+                        <li key={uuidv4()} className={s.galleryItem}>
                             <img src={`${imagesHost}/${image}`} className={s.galleryImage} alt={`pictures of ${nickname}`}/>
                             <button type='button' className={s.galleryButton} onClick={() => deleteImage(image)}>Delete</button>
                         </li>
                     ))}
                 </ul>
             </div>}
-            <form id='add-images' encType='multipart/form-data' className={s.addImageForm} onSubmit={handlSubmit}>
-                <input name='images' type='file' files={images} multiple onChange={handlChange}/>
-                <button type='submit'>Add images</button>
+                <form id='add-images' encType='multipart/form-data' className={s.addImageForm} onSubmit={handlSubmit}>
+                    <h4 className={s.formTitle}>Choose images to add</h4>
+                <input name='images' type='file'  multiple onChange={handlChange}/>
+                <button type='submit' disabled={newImages.length === 0 ? true : false}>Add images</button>
             </form>
-            
         </div>}
     </>
 }

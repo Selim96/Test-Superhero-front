@@ -1,6 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = 'https://superheros-collection.herokuapp.com/superheros';
+// axios.defaults.baseURL = "http://localhost:4001/superheros";
 
 class Api {
     page = 1;
@@ -30,16 +31,14 @@ class Api {
     return result;
     }
 
-    async fetchToEditImages(imageToDelete = null, arrayOfImages) {
+    async fetchToEditImages(data) {
         const result = await axios({
             method: 'patch',
             headers: { 'content-type': 'multipart/form-data' },
             url: `/${this.superId}`,
-            data: {
-                imageToDelete,
-                cuurentImages: arrayOfImages
-            }
+            data: data
         });
+        return result;
     }
 
     incrementPage() {

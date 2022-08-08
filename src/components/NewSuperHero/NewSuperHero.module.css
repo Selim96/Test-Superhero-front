@@ -1,0 +1,66 @@
+.addPage {
+    display: flex;
+    flex-direction: column;
+}
+
+.addForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    text-align: center;
+    color: rgb(14, 13, 82);
+}
+
+.inputBox {
+    margin-bottom: 10px;
+}
+
+.addFormInput {
+    color: antiquewhite;
+    background-color: rgb(122, 131, 255, .6);
+    border-radius: 8px;
+}
+
+::placeholder {
+    color: rgb(16, 16, 253, 0.6);
+}
+
+.fileInputBox {
+    width: 100%;
+    display: flex;
+    justify-content:center;
+    margin-bottom: 15px;
+}
+
+.fileInput {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.addFileLable {
+    text-align: center;
+    width: 130px;
+    height: 40px;
+    border: 2px solid rgba(18, 27, 82);;
+    border-radius: 15px;
+    padding: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.addFileLable:hover {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+}
+
+.submitBtn {
+    width: 130px;
+    height: 25px;
+    border-radius: 15px;
+    background-color: rgb(14, 13, 82);
+    color: antiquewhite;
+    cursor: pointer;
+}
