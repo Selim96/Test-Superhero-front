@@ -11,8 +11,9 @@ function App() {
 
     return <div>
         <Appbar />
+        <div className="backgraud"></div>
         <Container>
-        <Suspense fallback={<h2>Loading...</h2>}>   
+        <Suspense fallback={<h2 className="loader">Loading...</h2>}>   
             <Routes>
                 <Route path="/" element={<HomePage/>} exact/>
                     

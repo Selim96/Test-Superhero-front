@@ -5,6 +5,7 @@
     font-weight: 700;
 }
 
-.activeLink {
+.link:hover,
+.link:focus {
     color: rgb(219, 49, 19);
 }

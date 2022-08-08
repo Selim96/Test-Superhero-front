@@ -25,6 +25,7 @@ function SuperHeroInfo() {
             }
         } catch (error) {
             console.log(error.message);
+            toast.error("Error, update app!");
         }
     };
 

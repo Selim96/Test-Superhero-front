@@ -10,6 +10,7 @@ function HomePage() {
     const [allHeros, setAllHeros] = useState([]);
     const [onDelete, setOnDelete] = useState(true);
     const [length, setLength] = useState(null);
+    const [onLoading, setOnLoading] = useState(false);
 
     const toLoadAllHeros = async () => {
         try {
@@ -17,6 +18,7 @@ function HomePage() {
             
             setAllHeros(objectData.data.result);
             setLength(objectData.data.dataLength);
+            setOnLoading(false);
         } catch (error) {
             console.log(error.message);
         }
@@ -46,31 +48,41 @@ function HomePage() {
     }
 
     useEffect(() => {
-        
+        setOnLoading(true)
         toLoadAllHeros();
     }, [onDelete]);
 
+    const btnClassesBefor = [s.paginationBtn];
+    const btnClassesNext = [s.paginationBtn];
+
+    if (api.page < 2) {
+    btnClassesBefor.push(s.disabled);
+    }
+    if (api.page === Math.ceil(length / 5)) {
+        btnClassesNext.push(s.disabled);
+        
+    }
+
     return <>
-        {length === null ? <h2>Loading...</h2> : 
+        {onLoading && <h2 className="loader">Loading...</h2> }
+        {!onLoading && length === null ? <h2 className="loader">Any Superhero was not added to Collection</h2> : 
         <div className={s.homePage}>
             <ul className={s.gallery}>
                 {allHeros.map(({ _id: id, nickname, images }) => {
                     const imageUrl = images.length !== 0 ? `${imagesHost}/${images[0]}` : noImage;
                     return (
                     <li key={id} className={s.galleryItem}>
-                        <Link to={`${id}`}>
-                            <div className={s.galleryCard}>
-                                <img src={imageUrl} className={s.galleryImage} alt="Superhero poster"/>
-                                <p className={s.galleryNiclname}>{nickname}</p>
-                            </div>
+                        <Link to={`${id}`} className={s.galleryCard}>
+                            <img src={imageUrl} className={s.galleryImage} alt="Superhero poster"/>
+                            <p className={s.galleryNickname}>{nickname}</p>
                         </Link>
                         <button type="button" onClick={() => handlDelete(id)} className={s.dltButton}>Delete</button>
                     </li>
                 )})}
             </ul>
             {length > 5 && <div className={s.paginetion}>
-                <button type="button" onClick={() => clickBefor()} className={s.btn_befor} disabled={api.page < 2 ? true : false}>Befor</button>
-                <button type="button" onClick={() => clickNext()} className={s.btn_next} disabled={api.page === Math.ceil(length / 5) ? true : false}>Next</button>
+                <button type="button" onClick={() => clickBefor()} className={btnClassesBefor.join(" ")} disabled={api.page < 2 ? true : false}>Befor</button>
+                <button type="button" onClick={() => clickNext()} className={btnClassesNext.join(" ")} disabled={api.page === Math.ceil(length / 5) ? true : false}>Next</button>
             </div>}
         </div>}
     </>

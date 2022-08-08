@@ -1,3 +1,116 @@
+.homePage {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+
+.gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap:wrap;
+    margin-bottom: 20px;
+}
+
+.galleryItem {
+    width: 110px;
+    height: 180px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.233);
+}
+
+.galleryItem:hover {
+    box-shadow: 1px 2px 2px 1px rgba(0, 0, 255, .2);
+}
+
+.galleryCard {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
 .galleryImage {
-    width: 200px;
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.galleryNickname {
+    text-align: center;
+    margin: 0;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 14px;
+
+}
+
+.galleryImage {
+    width: 100px;
+    max-height: 115px;
+}
+
+.dltButton {
+    font-size: 12px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(18, 27, 82);
+    background-color: rgb(14, 13, 82);
+    color: antiquewhite;
+    cursor: pointer;
+}
+
+.dltButton:hover {
+    background-color: antiquewhite;
+    color: rgb(14, 13, 82);
+    font-weight: 600;
+}
+
+.paginetion {
+    width: 135px;
+    padding-bottom: 25px;
+}
+
+.paginationBtn {
+    font-size: 15px;
+    width: 60px;
+    height: 25px;
+    border: 1px solid rgba(18, 27, 82);
+    border-radius: 5px;
+    background-color: rgb(14, 13, 82);
+        color: antiquewhite;
+        cursor: pointer;
+}
+
+.paginationBtn:first-child {
+    margin-right: 15px;
+}
+
+.paginationBtn:hover {
+    background-color: antiquewhite;
+    color: rgb(14, 13, 82);
+    font-weight: 600;
+}
+
+.disabled {
+    background-color: rgba(250, 235, 215, 0.459);
+    color: rgb(14, 13, 82);
+    font-weight: 600;
+}
+
+.disabled:hover {
+    background-color: rgba(250, 235, 215, 0.459);
+    color: rgb(14, 13, 82);
+    font-weight: 600;
 }
