@@ -41,10 +41,9 @@ function SuperHeroInfo() {
             setSuperHero({ ...superHero, images: data.images });
         }).catch(error => {
             console.log(error.message);
+            toast.error("Error, update app!");
         });
-
         setNewImages([]);
-        toast("Superhero was added successfuly!")
     }
 
     useEffect(() => {
@@ -53,6 +52,7 @@ function SuperHeroInfo() {
             setSuperHero(result.data);
         }).catch(error => {
             console.log(error.message);
+            toast.error("Server Error");
         });
     }, [superId]);
 

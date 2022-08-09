@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast} from 'react-toastify'
 import api from "../../services/api";
 import s from './HomePage.module.css';
 
@@ -9,7 +10,7 @@ const imagesHost = "https://superheros-collection.herokuapp.com";
 function HomePage() {
     const [allHeros, setAllHeros] = useState([]);
     const [onDelete, setOnDelete] = useState(true);
-    const [length, setLength] = useState(null);
+    const [length, setLength] = useState(0);
     const [onLoading, setOnLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -21,6 +22,7 @@ function HomePage() {
             setLength(objectData.data.dataLength);
             setOnLoading(false);
         } catch (error) {
+            toast.error("Server Error");
             console.log(error.message);
             setError(true);
             setOnLoading(false);
@@ -45,6 +47,7 @@ function HomePage() {
         try {
             await api.fetchToDeleteHero();
         } catch (error) {
+            toast.error('Server Error');
             console.log(error.message);
         }
         setOnDelete(!onDelete);
@@ -69,7 +72,7 @@ function HomePage() {
     return <>
         {error && <h3 className="error">Something went wrong, update app.</h3>}
         {onLoading && <h2 className="loader">Loading...</h2> }
-        {!onLoading && length === null ? <h2 className="loader">Any Superhero was not added to Collection</h2> : 
+        {!onLoading && length === 0 ? <h2 className="error">Any Superhero was not added to Collection</h2> : 
         <div className={s.homePage}>
             <ul className={s.gallery}>
                 {allHeros.map(({ _id: id, nickname, images }) => {

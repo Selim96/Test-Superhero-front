@@ -1,5 +1,7 @@
 import React, {lazy, Suspense} from "react";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Appbar from "./Appbar";
 import Container from "./Container";
 const HomePage = lazy(() => import("./HomePage" /*webpackChankName: "home-view" */));
@@ -26,6 +28,7 @@ function App() {
             </Routes>
         </Suspense>
         </Container>
+        <ToastContainer />
     </div>
 }
 
