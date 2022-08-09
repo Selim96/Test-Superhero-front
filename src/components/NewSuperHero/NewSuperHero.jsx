@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import api from '../../services/api';
-import {toast} from 'react-toastify'
+import { toast} from 'react-toastify'
 import s from './NewSuperHero.module.css';
+
 
 function NewSuperHero() {
     const [nickname, setNickname] = useState("");
@@ -54,20 +55,17 @@ function NewSuperHero() {
         if (images.length !== 0) {
             formData.append("images", images);
         }
-        
 
         api.fetchToCreate(formData).then(result => {
             console.log(result);
-            toast.done("Superhero was added successfuly!");
+            toast.success("Superhero was added successfuly!");
         }).catch(error => {
             console.log(error.message);
             const words = error.message.split(" ");
             if (words.includes("500")) {
-                alert(`${nickname} is already in collection!`);
+                toast.error(`${nickname} is already in collection!`);
             }
         });
-        
-        console.log(images)
 
         setNickname("");
         setRealName("");
@@ -75,8 +73,6 @@ function NewSuperHero() {
         setCatchPhrase("");
         setDescription("");
         setImages([]);
-        
-        
     }
     
     return (
