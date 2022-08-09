@@ -40,4 +40,13 @@ a {
 .loader {
   padding: 0;
   margin: 0;
+  text-align: center;
+}
+
+.error {
+  text-align: center;
+  padding: 0;
+  padding-top: 15px;
+  margin: 0;
+  margin-bottom: 25px;
 }

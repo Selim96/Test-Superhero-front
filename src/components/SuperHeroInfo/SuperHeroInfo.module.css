@@ -1,3 +1,140 @@
+.superCard {
+    padding-top: 20px;
+}
+
+.title {
+    margin: 0;
+    margin-bottom: 20px;
+    text-align: center
+}
+
+
+
+.superCardItem {
+    margin-bottom: 10px;
+    color: antiquewhite;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+}
+
+.superCardSpan {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+.gallery {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.galleryTitile {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.galleryList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.galleryItem {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.233);
+}
+
 .galleryImage {
-    width: 300px;
+    width: 240px;
+    margin-bottom: 10px;
+    max-height: 270px;
+}
+
+.galleryButton {
+    font-size: 12px;
+        height: 20px;
+        border-radius: 5px;
+        border: 1px solid rgba(18, 27, 82);
+        background-color: rgb(14, 13, 82);
+        color: antiquewhite;
+        cursor: pointer;
+}
+
+.galleryButton:hover {
+    background-color: antiquewhite;
+    color: rgb(14, 13, 82);
+    font-weight: 600;
+}
+
+.addImageForm {
+
+}
+
+.formTitle {
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.fileInput {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.addFileLable {
+    text-align: center;
+    width: 135px;
+    height: 25px;
+    border: 1.5px solid rgba(18, 27, 82);
+    border-radius: 15px;
+    padding: 2px 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.addFileLable:hover {
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+}
+
+.submitBtn {
+    font-size: 14px;
+    font-weight: 400;
+    width: 130px;
+    height: 25px;
+    border: 1px solid rgba(18, 27, 82);
+    border-radius: 15px;
+    background-color: rgb(14, 13, 82);
+    color: antiquewhite;
+    cursor: pointer;
+}
+
+.submitBtn:hover {
+    background-color: antiquewhite;
+    color: rgb(14, 13, 82);
+    font-weight: 600;
+}
+
+.disabled {
+    background-color: rgba(250, 235, 215, 0.459);
+    color: rgb(14, 13, 82);
+    font-weight: 600;
+}
+
+.disabled:hover {
+    background-color: rgba(250, 235, 215, 0.459);
+    color: rgb(14, 13, 82);
+    font-weight: 600;
 }

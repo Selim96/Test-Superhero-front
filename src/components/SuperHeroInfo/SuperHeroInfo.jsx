@@ -57,17 +57,23 @@ function SuperHeroInfo() {
     }, [superId]);
 
     const { nickname, real_name, images, origin_description, superpowers, catch_phrase } = superHero;
+
+    const btnClasses = [s.submitBtn];
+    
+    if (newImages.length === 0) {
+        btnClasses.push(s.disabled);
+    }
     
     return <>
-        {Object.keys(superHero).length === 0 ? <h2>Loading...</h2> :
+        {Object.keys(superHero).length === 0 ? <h2 className="loader">Loading...</h2> :
         <div className={s.superCard}>
             <h2 className={s.title}>Information about <span className={s.titleNickname}>{nickname}</span></h2>
             <ul>
-                <li className={s.superCardItem}><span className={s.superCardSpan}>Nickname:</span> {nickname}</li>
-                <li className={s.superCardItem}><span className={s.superCardSpan}>Real name:</span> {real_name}</li>
-                <li className={s.superCardItem}><span className={s.superCardSpan}>Superpower:</span> {superpowers}</li>
-                <li className={s.superCardItem}><span className={s.superCardSpan}>Description:</span> {origin_description}</li>
-                <li className={s.superCardItem}><span className={s.superCardSpan}>Catch phrase:</span> {catch_phrase}</li>
+                <li className={s.superCardItem}>Nickname: <div className={s.superCardSpan}>{nickname}</div></li>
+                <li className={s.superCardItem}>Real name: <div className={s.superCardSpan}>{real_name}</div> </li>
+                <li className={s.superCardItem}>Superpower: <div className={s.superCardSpan}>{superpowers}</div> </li>
+                <li className={s.superCardItem}>Description: <div className={s.superCardSpan}>{origin_description}</div> </li>
+                <li className={s.superCardItem}>Catch phrase: <div className={s.superCardSpan}>{catch_phrase}</div> </li>
             </ul>
             {images.length !== 0 &&
             <div className={s.gallery}>
@@ -81,10 +87,11 @@ function SuperHeroInfo() {
                     ))}
                 </ul>
             </div>}
-                <form id='add-images' encType='multipart/form-data' className={s.addImageForm} onSubmit={handlSubmit}>
-                    <h4 className={s.formTitle}>Choose images to add</h4>
-                <input name='images' type='file'  multiple onChange={handlChange}/>
-                <button type='submit' disabled={newImages.length === 0 ? true : false}>Add images</button>
+            <form id='add-images' encType='multipart/form-data' className={s.addImageForm} onSubmit={handlSubmit}>
+                <h4 className={s.formTitle}>Choose images to add</h4>
+                <label for="imageInput" className={s.addFileLable}>Choose Images</label>
+                <input id='imageInput' name='images' type='file'  multiple onChange={handlChange} className={s.fileInput}/>
+                <button type='submit' disabled={newImages.length === 0 ? true : false} className={btnClasses.join(" ")}>Add images</button>
             </form>
         </div>}
     </>

@@ -11,16 +11,19 @@ function HomePage() {
     const [onDelete, setOnDelete] = useState(true);
     const [length, setLength] = useState(null);
     const [onLoading, setOnLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const toLoadAllHeros = async () => {
         try {
             const objectData = await api.fetchAllHeros();
-            
+            setError(false);
             setAllHeros(objectData.data.result);
             setLength(objectData.data.dataLength);
             setOnLoading(false);
         } catch (error) {
             console.log(error.message);
+            setError(true);
+            setOnLoading(false);
         }
     };
 
@@ -64,6 +67,7 @@ function HomePage() {
     }
 
     return <>
+        {error && <h3 className="error">Something went wrong, update app.</h3>}
         {onLoading && <h2 className="loader">Loading...</h2> }
         {!onLoading && length === null ? <h2 className="loader">Any Superhero was not added to Collection</h2> : 
         <div className={s.homePage}>
