@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast} from 'react-toastify'
 import api from "../../services/api";
-import s from './HomePage.module.css';
+import s from './HomePage.module.scss';
 
 import noImage from '../../images/noImage.webp';
 const imagesHost = "https://superheros-collection.herokuapp.com";

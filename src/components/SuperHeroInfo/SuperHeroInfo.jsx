@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import s from './SuperHeroInfo.module.css';
+import s from './SuperHeroInfo.module.scss';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
@@ -37,7 +37,6 @@ function SuperHeroInfo() {
         e.preventDefault();
 
         api.fetchToEditImages(formData).then(({ data }) => {
-            console.log(data);
             setSuperHero({ ...superHero, images: data.images });
         }).catch(error => {
             console.log(error.message);

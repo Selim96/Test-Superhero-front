@@ -1,4 +1,4 @@
-import s from './Appbar.module.css';
+import s from './Appbar.module.scss';
 import Navigation from '../Navigation';
 
 export default function Appbar() {

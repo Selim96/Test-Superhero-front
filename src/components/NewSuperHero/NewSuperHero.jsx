@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import api from '../../services/api';
 import { toast} from 'react-toastify'
-import s from './NewSuperHero.module.css';
+import s from './NewSuperHero.module.scss';
 
 
 function NewSuperHero() {
