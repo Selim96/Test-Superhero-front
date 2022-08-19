@@ -1,19 +1,52 @@
-const initialState = {
-    allHeros: [],
-    dataLength: 0,
-    onLoading: false,
-    error: ""
-};
+import { combineReducers } from "redux";
+import { createReducer } from "@reduxjs/toolkit";
+import * as action from "../superheros/actions";
 
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case "ADD_NOTE":
-      return [...state, action.payload];
+const herosReduser = createReducer({heros: [], dataLength: 0}, {
+  [action.fetchHerosSuccess]: (_, { payload }) => ({heros: [...payload.result.reverse()], dataLength: payload.dataLength}),
+  [action.deleteHeroSuccess]: (state, { payload }) => ({heros: state.heros.filter(item => item._id !== payload), dataLength: state.dataLength - 1}),
+  [action.addHerosSuccess]: (state, {payload}) => ({heros: [payload, ...state.heros], dataLength: state.dataLength + 1})
+});
 
-    case "DELETE_NOTE":
-      return state.filter(note => note.id !== action.payload.id);
+const aboutHeroReducer = createReducer({}, {
+  [action.addHerosSuccess]: (_, { payload }) => ({ ...payload }),
+  [action.fetchByIdSuccess]: (_, { payload }) => ({...payload }),
+  [action.editImageSuccess]: (_, { payload }) => ({ ...payload}),
+});
 
-    default:
-      return state;
-  }
-}
+const loadingReducer = createReducer(false, {
+  [action.fetchHerosRequest]: () => true,
+  [action.fetchHerosSuccess]: () => false,
+  [action.fetchHerosError]: () => false,
+
+  [action.deleteHeroRequest]: () => true,
+  [action.deleteHeroError]: () => false,
+  [action.deleteHeroSuccess]: () => false,
+
+  [action.addHerosRequest]: () => true,
+  [action.addHerosSuccess]: () => false,
+  [action.addHerosError]: () => false,
+
+  [action.fetchByIdReqest]: () => true,
+  [action.fetchByIdSuccess]: () => false,
+  [action.fetchByIdError]: () => false,
+
+  [action.editImageRequest]: () => true,
+  [action.editImageSuccess]: () => false,
+  [action.editImageError]: () => false,
+});
+
+const errorReducer = createReducer(false, {
+  [action.fetchHerosError]: (_, { payload }) => payload.message,
+  [action.fetchByIdError]: (_, { payload }) => payload.message,
+  [action.deleteHeroError]: (_, { payload }) => payload.message,
+  [action.addHerosError]: (_, { payload }) => payload.message,
+  [action.editImageError]: (_, { payload }) => payload.message
+})
+
+export default combineReducers({
+    allHeros: herosReduser,
+    aboutHeros: aboutHeroReducer,
+    onLoading: loadingReducer,
+    error: errorReducer
+});

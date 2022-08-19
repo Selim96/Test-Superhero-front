@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as action from "../redux/superheros/actions";
 
 axios.defaults.baseURL = 'https://superheros-collection.herokuapp.com/superheros';
 // axios.defaults.baseURL = "http://localhost:4001/superheros";
@@ -7,38 +8,43 @@ class Api {
     page = 1;
     superId = 0;
     
-    async fetchAllHeros() {
-        const result = await axios.get(`?page=${this.page}`);
-        return result;
-    }
+    fetchAllHeros = () => dispatch => {
+        dispatch(action.fetchHerosRequest());
 
-    async fetchToDeleteHero() {
-        await axios.delete(`/${this.superId}`);
-    }
+        axios.get(`?page=${this.page}`).then(({ data }) => dispatch(action.fetchHerosSuccess(data))).catch(error => dispatch(action.fetchHerosError(error)));
+    };
 
-    async fetchById() {
-        const result = await axios.get(`/${this.superId}`);
-        return result;
-    }
+    fetchToDeleteHero = id => dispatch => {
+        dispatch(action.deleteHeroRequest());
 
-    async fetchToCreate(data) {
-        const result = await axios({
+        axios.delete(`/${id}`).then(() => dispatch(action.deleteHeroSuccess(id))).catch(error => dispatch(action.deleteHeroError(error)));
+    };
+
+    fetchById = id => dispatch => {
+        dispatch(action.fetchByIdReqest());
+
+        axios.get(`/${id}`).then(({data}) => dispatch(action.fetchByIdSuccess(data))).catch(error => dispatch(action.fetchByIdError(error)));
+    };
+
+    fetchToCreate = data => dispatch => {
+        dispatch(action.addHerosRequest());
+        axios({
             method: 'POST',
             headers: { 'content-type': 'multipart/form-data' },
             data: data,
             url: "/"
-        });
-    return result;
+        }).then(({data}) => dispatch(action.addHerosSuccess(data))).catch(error => dispatch(action.addHerosError(error)));
     }
 
-    async fetchToEditImages(data) {
-        const result = await axios({
+    fetchToEditImages = image => dispatch => {
+        dispatch(action.editImageRequest());
+        
+        axios({
             method: 'patch',
             headers: { 'content-type': 'multipart/form-data' },
             url: `/${this.superId}`,
-            data: data
-        });
-        return result;
+            data: image
+        }).then(({data}) => dispatch(action.editImageSuccess(data))).catch(error => dispatch(action.editImageError(error)));
     }
 
     incrementPage() {

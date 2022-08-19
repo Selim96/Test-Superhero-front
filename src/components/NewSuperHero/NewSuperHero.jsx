@@ -1,7 +1,10 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux/es/exports';
+import { useNavigate } from "react-router-dom";
 import api from '../../services/api';
 import { toast} from 'react-toastify'
 import s from './NewSuperHero.module.scss';
+import * as selectors from "../../redux/superheros/selectors";
 
 
 function NewSuperHero() {
@@ -11,6 +14,11 @@ function NewSuperHero() {
     const [catchPhrase, setCatchPhrase] = useState("");
     const [description, setDescription] = useState("");
     const [images, setImages] = useState([]);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const superHero = useSelector(selectors.getHeroInfo);
+    const error = useSelector(selectors.getError);
 
     const handlChange = e => {
 
@@ -56,16 +64,12 @@ function NewSuperHero() {
             formData.append("images", images);
         }
 
-        api.fetchToCreate(formData).then(result => {
-            console.log(result);
-            toast.success("Superhero was added successfuly!");
-        }).catch(error => {
-            console.log(error.message);
-            const words = error.message.split(" ");
-            if (words.includes("500")) {
-                toast.error(`${nickname} is already in collection!`);
-            }
-        });
+        dispatch(api.fetchToCreate(formData));
+        toast.success("Superhero was added successfuly!");
+        // navigate(`/${superHero._id}`, { replace: true });
+        if (error) {
+            toast.error(error);
+        }
 
         setNickname("");
         setRealName("");
@@ -73,7 +77,14 @@ function NewSuperHero() {
         setCatchPhrase("");
         setDescription("");
         setImages([]);
-    }
+        //     catch(error => {
+            
+        //     const words = error.message.split(" ");
+        //     if (words.includes("500")) {
+        //         toast.error(`${nickname} is already in collection!`);
+        //     }
+        // });
+    };
     
     return (
         <div className={s.addPage}>
