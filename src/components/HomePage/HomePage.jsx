@@ -5,9 +5,11 @@ import { toast} from 'react-toastify'
 import api from "../../services/api";
 import s from './HomePage.module.scss';
 import * as selectors from "../../redux/superheros/selectors";
-
+import { BaseURL } from "../../services/api";
 import noImage from '../../images/noImage.webp';
-const imagesHost = "https://superheros-collection.herokuapp.com";
+
+// const imagesHost = "https://superheros-collection.herokuapp.com";
+const imagesHost = `${BaseURL}`;
 
 function HomePage() {
 

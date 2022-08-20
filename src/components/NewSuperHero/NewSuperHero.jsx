@@ -66,7 +66,7 @@ function NewSuperHero() {
 
         dispatch(api.fetchToCreate(formData));
         toast.success("Superhero was added successfuly!");
-        // navigate(`/${superHero._id}`, { replace: true });
+        navigate(`/${superHero._id}`, { replace: true });
         if (error) {
             toast.error(error);
         }

@@ -3,7 +3,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import * as action from "../superheros/actions";
 
 const herosReduser = createReducer({heros: [], dataLength: 0}, {
-  [action.fetchHerosSuccess]: (_, { payload }) => ({heros: [...payload.result.reverse()], dataLength: payload.dataLength}),
+  [action.fetchHerosSuccess]: (_, { payload }) => ({heros: [...payload.result], dataLength: payload.dataLength}),
   [action.deleteHeroSuccess]: (state, { payload }) => ({heros: state.heros.filter(item => item._id !== payload), dataLength: state.dataLength - 1}),
   [action.addHerosSuccess]: (state, {payload}) => ({heros: [payload, ...state.heros], dataLength: state.dataLength + 1})
 });
@@ -11,7 +11,7 @@ const herosReduser = createReducer({heros: [], dataLength: 0}, {
 const aboutHeroReducer = createReducer({}, {
   [action.addHerosSuccess]: (_, { payload }) => ({ ...payload }),
   [action.fetchByIdSuccess]: (_, { payload }) => ({...payload }),
-  [action.editImageSuccess]: (_, { payload }) => ({ ...payload}),
+  [action.editImageSuccess]: (state, { payload }) => ({...state, images: [...payload.images]}),
 });
 
 const loadingReducer = createReducer(false, {
