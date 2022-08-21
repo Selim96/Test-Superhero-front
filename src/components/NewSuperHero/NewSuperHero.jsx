@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux/es/exports';
 import { useNavigate } from "react-router-dom";
 import api from '../../services/api';
 import { toast} from 'react-toastify'
 import s from './NewSuperHero.module.scss';
 import * as selectors from "../../redux/superheros/selectors";
-
+import { toCleanError, toCleanAdded } from '../../redux/superheros/actions';
 
 function NewSuperHero() {
     const [nickname, setNickname] = useState("");
@@ -19,6 +19,7 @@ function NewSuperHero() {
     const dispatch = useDispatch();
     const superHero = useSelector(selectors.getHeroInfo);
     const error = useSelector(selectors.getError);
+    const isAddedHero = useSelector(selectors.getisAddedHero);
 
     const handlChange = e => {
 
@@ -65,26 +66,33 @@ function NewSuperHero() {
         }
 
         dispatch(api.fetchToCreate(formData));
-        toast.success("Superhero was added successfuly!");
-        navigate(`/${superHero._id}`, { replace: true });
-        if (error) {
-            toast.error(error);
-        }
-
+        
         setNickname("");
         setRealName("");
         setSuperpowers("");
         setCatchPhrase("");
         setDescription("");
         setImages([]);
-        //     catch(error => {
-            
-        //     const words = error.message.split(" ");
-        //     if (words.includes("500")) {
-        //         toast.error(`${nickname} is already in collection!`);
-        //     }
-        // });
     };
+
+    useEffect(() => {
+        if (error) {
+            const words = error.split(" ");
+            if (words.includes("500")) {
+            toast.error("This Superhero is already in collection!");
+            } else {
+                toast.error(error);
+            }
+            dispatch(toCleanError());
+            return;
+        };
+        
+        if (isAddedHero) {
+            toast.success("Superhero was added successfuly!");
+            navigate(`/${superHero._id}`, { replace: true });
+            dispatch(toCleanAdded());
+        }
+    }, [error, superHero, dispatch, isAddedHero, navigate]);
     
     return (
         <div className={s.addPage}>
@@ -112,7 +120,7 @@ function NewSuperHero() {
                 </div>
 
                 <div className={s.fileInputBox}>
-                    <label for="fileLoader" className={s.addFileLable}>Choose Images</label>
+                    <label htmlFor="fileLoader" className={s.addFileLable}>Choose Images</label>
                     <input id='fileLoader' name='images' type='file' files={images} multiple onChange={handlChange} className={s.fileInput} />
                 </div>
 

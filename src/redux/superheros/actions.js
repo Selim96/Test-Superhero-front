@@ -19,3 +19,8 @@ export const deleteHeroError = createAction("deleteHeroError");
 export const editImageRequest = createAction("addImageRequest");
 export const editImageSuccess = createAction("addImageSuccess");
 export const editImageError = createAction("addImageError");
+
+export const toClearHero = createAction("toClearHero");
+
+export const toCleanError = createAction("toCleanError");
+export const toCleanAdded = createAction("toCleanAdded");

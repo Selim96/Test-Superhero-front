@@ -31,11 +31,10 @@ function HomePage() {
 
     const handlDelete = async (id) => {
         api.superId = id;
-        console.log(allHeros)
         dispatch(api.fetchToDeleteHero(id));
         
-        if (allHeros.dataLength === (api.page * 5 - 4)) {
-            api.decrementPage();
+        if (allHeros.dataLength === (api.page * 5 - 4) && allHeros.dataLength !== 1) {
+            clickBefor();
         }
     }
 
@@ -45,7 +44,7 @@ function HomePage() {
             toast.error(`Error: ${errors}`);
         }
         
-    }, [dispatch, errors]);
+    }, [dispatch, errors, ]);
 
     const btnClassesBefor = [s.paginationBtn];
     const btnClassesNext = [s.paginationBtn];

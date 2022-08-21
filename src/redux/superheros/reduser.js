@@ -9,9 +9,15 @@ const herosReduser = createReducer({heros: [], dataLength: 0}, {
 });
 
 const aboutHeroReducer = createReducer({}, {
+  [action.toClearHero]: () => ({}),
   [action.addHerosSuccess]: (_, { payload }) => ({ ...payload }),
   [action.fetchByIdSuccess]: (_, { payload }) => ({...payload }),
   [action.editImageSuccess]: (state, { payload }) => ({...state, images: [...payload.images]}),
+});
+
+const isAddedReducer = createReducer(false, {
+  [action.addHerosSuccess]: () => true,
+  [action.toCleanAdded]: () => false
 });
 
 const loadingReducer = createReducer(false, {
@@ -37,6 +43,7 @@ const loadingReducer = createReducer(false, {
 });
 
 const errorReducer = createReducer(false, {
+  [action.toCleanError]: () => false,
   [action.fetchHerosError]: (_, { payload }) => payload.message,
   [action.fetchByIdError]: (_, { payload }) => payload.message,
   [action.deleteHeroError]: (_, { payload }) => payload.message,
@@ -47,6 +54,7 @@ const errorReducer = createReducer(false, {
 export default combineReducers({
     allHeros: herosReduser,
     aboutHeros: aboutHeroReducer,
+    isAddedHero: isAddedReducer,
     onLoading: loadingReducer,
     error: errorReducer
 });

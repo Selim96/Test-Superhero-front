@@ -6,6 +6,7 @@ import api from '../../services/api';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import * as selectors from "../../redux/superheros/selectors";
+import { toClearHero } from '../../redux/superheros/actions';
 import { BaseURL } from "../../services/api";
 
 const imagesHost = `${BaseURL}`;
@@ -46,6 +47,10 @@ function SuperHeroInfo() {
         if (error) {
             toast.error(`Error: ${error}`);
         }
+
+        return function cleanup() {
+            dispatch(toClearHero());
+        }; 
     }, [dispatch, superId, error]);
 
     const { nickname, real_name, images, origin_description, superpowers, catch_phrase } = superHero;
@@ -81,7 +86,7 @@ function SuperHeroInfo() {
             </div>}
             <form id='add-images' encType='multipart/form-data' className={s.addImageForm} onSubmit={handlSubmit}>
                 <h4 className={s.formTitle}>Choose images to add</h4>
-                <label for="imageInput" className={s.addFileLable}>Choose Images</label>
+                <label htmlFor="imageInput" className={s.addFileLable}>Choose Images</label>
                 <input id='imageInput' name='images' type='file'  multiple onChange={handlChange} className={s.fileInput}/>
                 <button type='submit' disabled={newImages.length === 0 ? true : false} className={btnClasses.join(" ")}>Add images</button>
             </form>
