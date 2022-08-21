@@ -1,8 +1,8 @@
 import axios from "axios";
 import * as action from "../redux/superheros/actions";
 
-// export const BaseURL = "https://superheros-collection.herokuapp.com";
-export const BaseURL = "http://localhost:4001";
+export const BaseURL = "https://superheros-collection.herokuapp.com";
+// export const BaseURL = "http://localhost:4001";
 
 axios.defaults.baseURL = `${BaseURL}/superheros`;
 
