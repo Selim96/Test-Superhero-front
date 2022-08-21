@@ -1,15 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux/es/exports';
 import s from './SuperHeroInfo.module.scss';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
+import * as selectors from "../../redux/superheros/selectors";
+import { toClearHero } from '../../redux/superheros/actions';
+import { BaseURL } from "../../services/api";
 
-const imagesHost = "https://superheros-collection.herokuapp.com";
+const imagesHost = `${BaseURL}`;
 
 function SuperHeroInfo() {
-    const [superHero, setSuperHero] = useState({});
     const [newImages, setNewImages] = useState([]);
+
+    const dispatch = useDispatch();
+    const superHero = useSelector(selectors.getHeroInfo);
+    const onLoading = useSelector(selectors.getLoader);
+    const error = useSelector(selectors.getError);
 
     const { superId } = useParams();
 
@@ -18,15 +26,7 @@ function SuperHeroInfo() {
 
     const deleteImage = async (image) => {
         formData.append("imageToDelete", image);
-        try {
-            const {data} = await api.fetchToEditImages(formData);
-            if (data) {
-                setSuperHero({ ...superHero, images: data.images });
-            }
-        } catch (error) {
-            console.log(error.message);
-            toast.error("Error, update app!");
-        }
+        dispatch(api.fetchToEditImages(formData));
     };
 
     const handlChange = e => {
@@ -36,24 +36,22 @@ function SuperHeroInfo() {
     const handlSubmit = e => {
         e.preventDefault();
 
-        api.fetchToEditImages(formData).then(({ data }) => {
-            setSuperHero({ ...superHero, images: data.images });
-        }).catch(error => {
-            console.log(error.message);
-            toast.error("Error, update app!");
-        });
+        dispatch(api.fetchToEditImages(formData));
         setNewImages([]);
     }
 
     useEffect(() => {
         api.superId = superId;
-        api.fetchById().then((result) => {
-            setSuperHero(result.data);
-        }).catch(error => {
-            console.log(error.message);
-            toast.error("Server Error");
-        });
-    }, [superId]);
+        dispatch(api.fetchById(superId));
+        
+        if (error) {
+            toast.error(`Error: ${error}`);
+        }
+
+        return function cleanup() {
+            dispatch(toClearHero());
+        }; 
+    }, [dispatch, superId, error]);
 
     const { nickname, real_name, images, origin_description, superpowers, catch_phrase } = superHero;
 
@@ -64,7 +62,7 @@ function SuperHeroInfo() {
     }
     
     return <>
-        {Object.keys(superHero).length === 0 ? <h2 className="loader">Loading...</h2> :
+        {onLoading ? <h2 className="loader">Loading...</h2> :
         <div className={s.superCard}>
             <h2 className={s.title}>Information about <span className={s.titleNickname}>{nickname}</span></h2>
             <ul>
@@ -74,7 +72,7 @@ function SuperHeroInfo() {
                 <li className={s.superCardItem}>Description: <div className={s.superCardSpan}>{origin_description}</div> </li>
                 <li className={s.superCardItem}>Catch phrase: <div className={s.superCardSpan}>{catch_phrase}</div> </li>
             </ul>
-            {images.length !== 0 &&
+            {images && images.length !== 0 &&
             <div className={s.gallery}>
                 <h3 className={s.galleryTitile}>Gallery</h3>
                 <ul className={s.galleryList}>
@@ -88,7 +86,7 @@ function SuperHeroInfo() {
             </div>}
             <form id='add-images' encType='multipart/form-data' className={s.addImageForm} onSubmit={handlSubmit}>
                 <h4 className={s.formTitle}>Choose images to add</h4>
-                <label for="imageInput" className={s.addFileLable}>Choose Images</label>
+                <label htmlFor="imageInput" className={s.addFileLable}>Choose Images</label>
                 <input id='imageInput' name='images' type='file'  multiple onChange={handlChange} className={s.fileInput}/>
                 <button type='submit' disabled={newImages.length === 0 ? true : false} className={btnClasses.join(" ")}>Add images</button>
             </form>
