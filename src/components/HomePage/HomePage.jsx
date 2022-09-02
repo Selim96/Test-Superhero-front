@@ -67,7 +67,7 @@ function HomePage() {
                     return (
                     <li key={id} className={s.galleryItem}>
                         <Link to={`${id}`} className={s.galleryCard}>
-                            <img src={imageUrl} className={s.galleryImage} alt="Superhero poster"/>
+                            <img src={imageUrl} className={s.galleryImage} alt="Superhero poster" width={80} height='115'/>
                             <p className={s.galleryNickname}>{nickname}</p>
                         </Link>
                         <button type="button" onClick={() => handlDelete(id)} className={s.dltButton}>Delete</button>

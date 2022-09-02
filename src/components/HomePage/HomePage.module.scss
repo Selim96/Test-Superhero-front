@@ -45,6 +45,9 @@
 .galleryImage {
     margin-bottom: 10px;
     font-size: 10px;
+    text-align: center;
+    max-height: 115px;
+    object-fit: contain;
 }
 
 .galleryNickname {
@@ -53,12 +56,9 @@
     text-transform: capitalize;
     font-weight: 600;
     font-size: 14px;
-
-}
-
-.galleryImage {
-    width: 100px;
-    max-height: 115px;
+    &:hover {
+        color: red;
+    }
 }
 
 .dltButton {
