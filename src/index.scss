@@ -34,11 +34,20 @@ a {
   top: 0px;
   left: 0;
   z-index: -1;
-  background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 0.7407407407407407) 50%, rgba(252, 176, 69, 1) 100%);
-  background-image: url('./images/marvel-supers.webp');
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: auto;
+  background: linear-gradient(90deg, rgba(131, 58, 180, 0.7) 0%, rgba(253, 29, 29, 0.6) 50%, rgba(252, 176, 69, 0.7) 100%);
+
+}
+
+
+
+.bgimage {
+  opacity: 0.5;
+  width: 100%;
+  max-width: 1000px;
+  object-fit: scale-down;
+  margin: auto;
+  margin-top: 90px;
+  display: block;
 }
 
 .loader {

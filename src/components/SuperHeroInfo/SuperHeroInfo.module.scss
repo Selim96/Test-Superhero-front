@@ -55,7 +55,8 @@
 }
 
 .galleryImage {
-    width: 240px;
+    max-width: 240px;
+    height: auto;
     margin-bottom: 10px;
     max-height: 270px;
 }

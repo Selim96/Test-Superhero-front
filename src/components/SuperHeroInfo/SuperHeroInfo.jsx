@@ -78,7 +78,7 @@ function SuperHeroInfo() {
                 <ul className={s.galleryList}>
                     {images.map(image => (
                         <li key={uuidv4()} className={s.galleryItem}>
-                            <img src={`${imagesHost}/${image}`} className={s.galleryImage} alt={`pictures of ${nickname}`}/>
+                            <img src={`${imagesHost}/${image}`} className={s.galleryImage} alt={`pictures of ${nickname}`} width={'auto'} height={'auto'} />
                             <button type='button' className={s.galleryButton} onClick={() => deleteImage(image)}>Delete</button>
                         </li>
                     ))}

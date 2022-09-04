@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Appbar from "./Appbar";
 import Container from "./Container";
+import image from '../images/marvel-supers.webp';
 const HomePage = lazy(() => import("./HomePage" /*webpackChankName: "home-view" */));
 const SuperHeroInfo = lazy(() => import("./SuperHeroInfo"));
 const NewSuperHero = lazy(() => import('./NewSuperHero'));
@@ -13,7 +14,9 @@ function App() {
 
     return <div>
         <Appbar />
-        <div className="backgraud"></div>
+        <div className="backgraud">
+            <img src={image} className="bgimage" alt='background' width={'auto'} height={'auto'}/>
+        </div>
         <Container>
         <Suspense fallback={<h2 className="loader">Loading...</h2>}>   
             <Routes>

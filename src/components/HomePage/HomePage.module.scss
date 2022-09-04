@@ -40,6 +40,11 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 5px;
+    &:hover {
+        & .galleryNickname {
+            color: red;
+        }
+    }
 }
 
 .galleryImage {
@@ -56,9 +61,6 @@
     text-transform: capitalize;
     font-weight: 600;
     font-size: 14px;
-    &:hover {
-        color: red;
-    }
 }
 
 .dltButton {
