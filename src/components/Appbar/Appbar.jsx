@@ -6,6 +6,7 @@ export default function Appbar() {
         <header className={s.header}>
             <Navigation />
             <p className={s.title}>Superheros Collection</p>
+            <span className={s.icon}></span>
         </header>
     </>
 }
